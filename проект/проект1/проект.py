@@ -62,7 +62,7 @@ class Example(QMainWindow, Ui_MainWindow):
         flag = True
         sp = []
         tbname, okBtnPressed = QInputDialog.getText(self, "Введите название игры",
-                                               "Введите названеи игры")
+                                                    "Введите названеи игры")
         for k in str(tbname):
             if k in '1234567890':
                 flag = False

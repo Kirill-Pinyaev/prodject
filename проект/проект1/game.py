@@ -12,7 +12,7 @@ from PyQt5.QtWidgets import QMainWindow, QLabel, QMessageBox
 
 
 class Ui_MainWindoow(QMainWindow):
-    def __init__(self, players,parent):
+    def __init__(self, players, parent):
         super().__init__()
         self.Parent = parent
         self.k = 0
@@ -23,8 +23,6 @@ class Ui_MainWindoow(QMainWindow):
         self.lbl = ''
         self.setupUi(self)
         self.show()
-
-
 
     def setupUi(self, MainWindow):
         if self.k < len(self.players):
@@ -141,7 +139,6 @@ class Ui_MainWindoow(QMainWindow):
             text = text + self.masiv[6 - i][i + 2].text()
         text += '-'
 
-
         if 'XXXXX' in text:
             reply = QMessageBox.question(self, 'Message',
                                          f'Выиграл {self.players[self.k]}',
@@ -175,4 +172,3 @@ class Ui_MainWindoow(QMainWindow):
                     self.masiv[i][j].setText(' ')
                     self.flag = True
                     self.masiv[i][j].setDisabled(False)
-
