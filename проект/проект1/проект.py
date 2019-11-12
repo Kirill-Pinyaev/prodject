@@ -20,6 +20,7 @@ class Diary:
 
 class Example(QMainWindow, Ui_MainWindow):
     def __init__(self):
+        # привет
         super().__init__()
         self.setupUi(self)
         self.count = 0
