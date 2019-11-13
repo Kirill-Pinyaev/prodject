@@ -1,12 +1,3 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'C:\Users\student\PycharmProjects\2k19-2k20\Проект\game.ui'
-#
-# Created by: PyQt5 UI code generator 5.13.0
-#
-# WARNING! All changes made in this file will be lost!
-
-
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMainWindow, QLabel, QMessageBox
 
@@ -26,10 +17,10 @@ class Ui_MainWindoow(QMainWindow):
 
     def setupUi(self, MainWindow):
         if self.k < len(self.players):
-            reply = QMessageBox.question(self, 'Игроки',
-                                         f'Играют {self.players[self.k]}'
-                                         f' и {self.players[self.k + 1]}',
-                                         QMessageBox.Yes)
+            QMessageBox.question(self, 'Игроки',
+                                 f'Играют {self.players[self.k]}'
+                                 f' и {self.players[self.k + 1]}',
+                                 QMessageBox.Yes)
             MainWindow.setObjectName("MainWindow")
             MainWindow.resize(265, 319)
             self.centralwidget = QtWidgets.QWidget(MainWindow)
