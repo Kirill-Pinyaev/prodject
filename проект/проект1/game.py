@@ -61,6 +61,10 @@ class Ui_MainWindoow(QMainWindow):
             self.lbl.setText(f'{self.players[self.k]} - X, {self.players[self.k + 1]} - 0')
             self.lbl.move(100, 280)
             self.lbl.resize(300, 20)
+            self.lbl_xod = QLabel(self)
+            self.lbl_xod.move(50, 280)
+            self.lbl_xod.resize(300, 20)
+            self.lbl_xod.setText(f'Ход X')
             MainWindow.setStatusBar(self.statusbar)
 
             self.retranslateUi(MainWindow)
@@ -75,11 +79,13 @@ class Ui_MainWindoow(QMainWindow):
 
     def playing(self):
         if self.flag:
+            self.lbl_xod.setText(f'Ход O')
             self.sender().setText('X')
             self.flag = False
             self.sender().setDisabled(True)
             self.win()
         else:
+            self.lbl_xod.setText(f'Ход X')
             self.sender().setText('O')
             self.flag = True
             self.sender().setDisabled(True)
@@ -140,7 +146,7 @@ class Ui_MainWindoow(QMainWindow):
         text += '-'
 
         if 'XXXXX' in text:
-            reply = QMessageBox.question(self, 'Message',
+            reply = QMessageBox.question(self, 'Win',
                                          f'Выиграл {self.players[self.k]}',
                                          QMessageBox.Yes)
             for i in range(7):
@@ -152,7 +158,7 @@ class Ui_MainWindoow(QMainWindow):
             self.k += 2
             self.setupUi(self)
         elif 'OOOOO' in text:
-            reply = QMessageBox.question(self, 'Message',
+            reply = QMessageBox.question(self, 'Win',
                                          f'Выиграл {self.players[self.k + 1]}',
                                          QMessageBox.Yes)
             for i in range(7):
@@ -164,7 +170,7 @@ class Ui_MainWindoow(QMainWindow):
             self.k += 2
             self.setupUi(self)
         elif ' ' not in text:
-            reply = QMessageBox.question(self, 'Message',
+            reply = QMessageBox.question(self, 'Draw',
                                          f'Ничья - играем заново',
                                          QMessageBox.Yes)
             for i in range(7):

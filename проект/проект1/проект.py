@@ -3,7 +3,7 @@ import sys
 from PyQt5.QtCore import Qt
 from m_menu import Ui_MainWindow
 from sqlite3 import Error
-from m__table import Ui_MainWindoww
+from m_table import Ui_MainWindoww
 from PyQt5.QtWidgets import QMainWindow, QApplication, QTableWidgetItem, QInputDialog, QMessageBox
 
 
@@ -33,17 +33,18 @@ class Example(QMainWindow, Ui_MainWindow):
 
     def add_(self):
         if self.count < 8:
-            if self.lineEdit_add.text():
-                self.label.setText("Возможно 8 или 4 или 2 игрока")
-                self.playerss.append(self.lineEdit_add.text())
+            if self.lineEdit_add.text().strip():
+                self.label.setText("Можно играть в 2, 4, 8")
+                self.playerss.append(self.lineEdit_add.text().strip())
                 self.count += 1
-                event = Diary(self.lineEdit_add.text())
+                event = Diary(self.lineEdit_add.text().strip())
                 self.list.append(event)
                 self.lineEdit_add.clear()
                 self.listWidget_players.clear()
                 self.listWidget_players.addItems([i.to_str() for i in self.list])
             else:
                 self.label.setText('Поле пустое')
+                self.lineEdit_add.clear()
         else:
             self.label.setText('Максимальное количество')
             self.add.setDisabled(True)
@@ -66,20 +67,31 @@ class Example(QMainWindow, Ui_MainWindow):
         for k in str(tbname):
             if k in '1234567890':
                 flag = False
-        if flag and okBtnPressed:
-            try:
-                cur = self.con.cursor()
-                cur.execute(f"Select name, name2 from {tbname}")
-                for row in cur:
-                    print(row)
-                    sp.append(row[0])
-                    sp.append(row[1])
-                self.table = Ui_MainWindoww(0, sp)
-                self.hide()
-            except Error:
-                QMessageBox.question(self, 'ERROR',
-                                     f'файл с таким именем нет',
-                                     QMessageBox.Yes)
+        if flag:
+            if okBtnPressed:
+                try:
+                    cur = self.con.cursor()
+                    cur.execute(f"Select name, name2 from {tbname}")
+                    for row in cur:
+                        print(row)
+                        sp.append(row[0])
+                        sp.append(row[1])
+                    self.table = Ui_MainWindoww(0, sp)
+                    self.hide()
+                except Error:
+                    QMessageBox.question(self, 'ERROR',
+                                         f'файл с таким именем нет',
+                                         QMessageBox.Yes)
+        else:
+            QMessageBox.question(self, 'ERROR',
+                                 f'Нельзя использовать цифры',
+                                 QMessageBox.Yes)
+
+    def keyPressEvent(self, event):
+        # enter мой 16777220
+        # enter котрый нужен 16777221
+        if event.key() == 16777220:
+            self.add_()
 
 
 if __name__ == '__main__':
