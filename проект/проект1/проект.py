@@ -7,7 +7,7 @@ from m_table import Ui_MainWindoww
 from PyQt5.QtWidgets import QMainWindow, QApplication, QTableWidgetItem, QInputDialog, QMessageBox
 
 
-class Diary:
+class Vod:
     def __init__(self, name):
         self.name = name
 
@@ -37,7 +37,7 @@ class Example(QMainWindow, Ui_MainWindow):
                 self.label.setText("Можно играть в 2, 4, 8")
                 self.playerss.append(self.lineEdit_add.text().strip())
                 self.count += 1
-                event = Diary(self.lineEdit_add.text().strip())
+                event = Vod(self.lineEdit_add.text().strip())
                 self.list.append(event)
                 self.lineEdit_add.clear()
                 self.listWidget_players.clear()
@@ -55,9 +55,6 @@ class Example(QMainWindow, Ui_MainWindow):
             self.table = Ui_MainWindoww(self.playerss)
         else:
             self.label.setText('Недопустимое значение')
-
-    def play_2(self, win):
-        self.table = Ui_MainWindoww(self.playerss)
 
     def loading(self):
         flag = True
