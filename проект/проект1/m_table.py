@@ -10,11 +10,13 @@ import random
 
 
 class Ui_MainWindoww(QMainWindow):
-    def __init__(self, players='', plaing=[]):
+    def __init__(self, players='', plaing=[[]]):
         super().__init__()
         self.plyers = players
         self.con = sqlite3.connect('Игры.db')
         self.win = []
+        self.flag_down = False
+        self.pixmap = ''
         self.plaing = plaing
         self.number = 0
         self.setupUI(self)
@@ -45,178 +47,260 @@ class Ui_MainWindoww(QMainWindow):
         self.lbl = QLabel(self)
         self.play = [[], [], [], []]
         self.labels = [[None for i in range(8)] for i in range(8)]
+        self.labels_name = [[None for i in range(8)] for i in range(8)]
         self.lavel = 0
 
-        if self.plaing == []:
+        if len(self.plaing) != 1:
+            self.flag_down = True
+            for i in range(1, len(self.plaing)):
+                for j in range(len(self.plaing[i])):
+                    self.labels[i][j] = self.plaing[i][j]
+                    self.labels_name[i][j] = self.plaing[i][j]
+
+        if self.plaing == [[]]:
             lenn = len(self.plyers)
             for f in range(lenn):
                 name = random.choices(self.plyers)
-                self.plaing.append(*name)
+                self.plaing[0].append(*name)
                 a = self.plyers.pop(self.plyers.index(*name))
 
-        if len(self.plaing) == 8:
-            self.btn.move(250, 330)
-            self.btn1.move(350, 330)
-            self.pixmap = QPixmap('таблица.jpg')
-            self.lbl.resize(600, 330)
+        for i in range(1):
+            if len(self.plaing[i]) == 8:
+                self.btn.move(250, 330)
+                self.btn1.move(350, 330)
+                self.pixmap = QPixmap('таблица.jpg')
+                self.lbl.resize(600, 330)
 
-            self.labels[self.lavel][0] = QLabel(self)
-            name = self.plaing[0]
-            self.labels[self.lavel][0].setText(f'{"".join(name)}')
-            self.labels[self.lavel][0].move(18, 25)
-            self.labels[self.lavel][0].resize(93, 24)
+                self.labels[self.lavel][0] = QLabel(self)
+                name = self.plaing[i][0]
+                self.labels[self.lavel][0].setText(f'{"".join(name)}')
+                self.labels[self.lavel][0].move(18, 25)
+                self.labels[self.lavel][0].resize(93, 24)
 
-            self.labels[self.lavel][1] = QLabel(self)
-            name = self.plaing[1]
-            self.labels[self.lavel][1].setText(f'{"".join(name)}')
-            self.labels[self.lavel][1].move(18, 59)
-            self.labels[self.lavel][1].resize(93, 24)
+                self.labels[self.lavel][1] = QLabel(self)
+                name = self.plaing[i][1]
+                self.labels[self.lavel][1].setText(f'{"".join(name)}')
+                self.labels[self.lavel][1].move(18, 59)
+                self.labels[self.lavel][1].resize(93, 24)
 
-            self.labels[self.lavel][2] = QLabel(self)
-            name = self.plaing[2]
-            self.labels[self.lavel][2].setText(f'{"".join(name)}')
-            self.labels[self.lavel][2].move(18, 106)
-            self.labels[self.lavel][2].resize(93, 24)
+                self.labels[self.lavel][2] = QLabel(self)
+                name = self.plaing[i][2]
+                self.labels[self.lavel][2].setText(f'{"".join(name)}')
+                self.labels[self.lavel][2].move(18, 106)
+                self.labels[self.lavel][2].resize(93, 24)
 
-            self.labels[self.lavel][3] = QLabel(self)
-            name = self.plaing[3]
-            self.labels[self.lavel][3].setText(f'{"".join(name)}')
-            self.labels[self.lavel][3].move(18, 139)
-            self.labels[self.lavel][3].resize(93, 24)
+                self.labels[self.lavel][3] = QLabel(self)
+                name = self.plaing[i][3]
+                self.labels[self.lavel][3].setText(f'{"".join(name)}')
+                self.labels[self.lavel][3].move(18, 139)
+                self.labels[self.lavel][3].resize(93, 24)
 
-            self.labels[self.lavel][4] = QLabel(self)
-            name = self.plaing[4]
-            self.labels[self.lavel][4].setText(f'{"".join(name)}')
-            self.labels[self.lavel][4].move(18, 186)
-            self.labels[self.lavel][4].resize(93, 24)
+                self.labels[self.lavel][4] = QLabel(self)
+                name = self.plaing[i][4]
+                self.labels[self.lavel][4].setText(f'{"".join(name)}')
+                self.labels[self.lavel][4].move(18, 186)
+                self.labels[self.lavel][4].resize(93, 24)
 
-            self.labels[self.lavel][5] = QLabel(self)
-            name = self.plaing[5]
-            self.labels[self.lavel][5].setText(f'{"".join(name)}')
-            self.labels[self.lavel][5].move(18, 219)
-            self.labels[self.lavel][5].resize(93, 24)
+                self.labels[self.lavel][5] = QLabel(self)
+                name = self.plaing[i][5]
+                self.labels[self.lavel][5].setText(f'{"".join(name)}')
+                self.labels[self.lavel][5].move(18, 219)
+                self.labels[self.lavel][5].resize(93, 24)
 
-            self.labels[self.lavel][6] = QLabel(self)
-            name = self.plaing[6]
-            self.labels[self.lavel][6].setText(f'{"".join(name)}')
-            self.labels[self.lavel][6].move(18, 266)
-            self.labels[self.lavel][6].resize(93, 24)
+                self.labels[self.lavel][6] = QLabel(self)
+                name = self.plaing[i][6]
+                self.labels[self.lavel][6].setText(f'{"".join(name)}')
+                self.labels[self.lavel][6].move(18, 266)
+                self.labels[self.lavel][6].resize(93, 24)
 
-            self.labels[self.lavel][7] = QLabel(self)
-            name = self.plaing[7]
-            self.labels[self.lavel][7].setText(f'{"".join(name)}')
-            self.labels[self.lavel][7].move(18, 299)
-            self.labels[self.lavel][7].resize(93, 24)
+                self.labels[self.lavel][7] = QLabel(self)
+                name = self.plaing[i][7]
+                self.labels[self.lavel][7].setText(f'{"".join(name)}')
+                self.labels[self.lavel][7].move(18, 299)
+                self.labels[self.lavel][7].resize(93, 24)
 
-            self.play[self.lavel] = [self.labels[self.lavel][0].text(),
-                                     self.labels[self.lavel][1].text(),
-                                     self.labels[self.lavel][2].text(),
-                                     self.labels[self.lavel][3].text(),
-                                     self.labels[self.lavel][4].text(),
-                                     self.labels[self.lavel][5].text(),
-                                     self.labels[self.lavel][6].text(),
-                                     self.labels[self.lavel][7].text()]
+                self.play[self.lavel] = [self.labels[self.lavel][0].text(),
+                                         self.labels[self.lavel][1].text(),
+                                         self.labels[self.lavel][2].text(),
+                                         self.labels[self.lavel][3].text(),
+                                         self.labels[self.lavel][4].text(),
+                                         self.labels[self.lavel][5].text(),
+                                         self.labels[self.lavel][6].text(),
+                                         self.labels[self.lavel][7].text()]
+                if self.flag_down:
+                    self.lavel += 1
+                    self.labels[self.lavel][0] = QLabel(self)
+                    self.labels[self.lavel][0].setText(self.labels_name[self.lavel][0])
+                    self.labels[self.lavel][0].move(162, 39)
+                    self.labels[self.lavel][0].resize(93, 24)
 
-            self.labels[self.lavel + 1][0] = QLabel(self)
-            self.labels[self.lavel + 1][0].move(162, 39)
-            self.labels[self.lavel + 1][0].resize(93, 24)
+                    self.labels[self.lavel][1] = QLabel(self)
+                    self.labels[self.lavel][1].setText(self.labels_name[self.lavel][1])
+                    self.labels[self.lavel][1].move(162, 119)
+                    self.labels[self.lavel][1].resize(93, 24)
 
-            self.labels[self.lavel + 1][1] = QLabel(self)
-            self.labels[self.lavel + 1][1].move(162, 119)
-            self.labels[self.lavel + 1][1].resize(93, 24)
+                    self.labels[self.lavel][2] = QLabel(self)
+                    self.labels[self.lavel][2].setText(self.labels_name[self.lavel][2])
+                    self.labels[self.lavel][2].move(162, 202)
+                    self.labels[self.lavel][2].resize(93, 24)
 
-            self.labels[self.lavel + 1][2] = QLabel(self)
-            self.labels[self.lavel + 1][2].move(162, 202)
-            self.labels[self.lavel + 1][2].resize(93, 24)
+                    self.labels[self.lavel][3] = QLabel(self)
+                    self.labels[self.lavel][3].setText(self.labels_name[self.lavel][3])
+                    self.labels[self.lavel][3].move(162, 282)
+                    self.labels[self.lavel][3].resize(93, 24)
 
-            self.labels[self.lavel + 1][3] = QLabel(self)
-            self.labels[self.lavel + 1][3].move(162, 282)
-            self.labels[self.lavel + 1][3].resize(93, 24)
+                    self.play[self.lavel] = [self.labels[self.lavel][0].text(),
+                                             self.labels[self.lavel][1].text(),
+                                             self.labels[self.lavel][2].text(),
+                                             self.labels[self.lavel][3].text()]
 
-            self.labels[self.lavel + 2][0] = QLabel(self)
-            self.labels[self.lavel + 2][0].move(294, 79)
-            self.labels[self.lavel + 2][0].resize(93, 24)
+                    if self.labels_name[self.lavel + 1][0]:
+                        self.lavel += 1
+                        self.labels[self.lavel][0] = QLabel(self)
+                        self.labels[self.lavel][0].setText(self.labels_name[self.lavel][0])
+                        self.labels[self.lavel][0].move(294, 79)
+                        self.labels[self.lavel][0].resize(93, 24)
 
-            self.labels[self.lavel + 2][1] = QLabel(self)
-            self.labels[self.lavel + 2][1].move(294, 241)
-            self.labels[self.lavel + 2][1].resize(93, 24)
+                        self.labels[self.lavel][1] = QLabel(self)
+                        self.labels[self.lavel][1].setText(self.labels_name[self.lavel][1])
+                        self.labels[self.lavel][1].move(294, 241)
+                        self.labels[self.lavel][1].resize(93, 24)
 
-            self.labels[self.lavel + 3][0] = QLabel(self)
-            self.labels[self.lavel + 3][0].move(450, 156)
-            self.labels[self.lavel + 3][0].resize(93, 24)
+                        self.labels[self.lavel + 1][0] = QLabel(self)
+                        self.labels[self.lavel + 1][0].move(450, 156)
+                        self.labels[self.lavel + 1][0].resize(93, 24)
+                    else:
+                        self.labels[self.lavel + 1][0] = QLabel(self)
+                        self.labels[self.lavel + 1][0].setText(self.labels_name[self.lavel + 1][0])
+                        self.labels[self.lavel + 1][0].move(294, 79)
+                        self.labels[self.lavel + 1][0].resize(93, 24)
 
-        elif len(self.plaing) == 4:
-            self.btn.move(160, 330)
-            self.btn1.move(260, 330)
-            MainWindow.resize(450, 350)
-            self.pixmap = QPixmap('таблица2.jpg')
-            self.lbl.resize(450, 330)
+                        self.labels[self.lavel + 1][1] = QLabel(self)
+                        self.labels[self.lavel + 1][1].setText(self.labels_name[self.lavel + 1][1])
+                        self.labels[self.lavel + 1][1].move(294, 241)
+                        self.labels[self.lavel + 1][1].resize(93, 24)
 
-            self.labels[self.lavel][0] = QLabel(self)
-            name = self.plaing[0]
-            self.labels[self.lavel][0].setText(f'{"".join(name)}')
-            self.labels[self.lavel][0].move(12, 39)
-            self.labels[self.lavel][0].resize(93, 24)
+                        self.labels[self.lavel + 2][0] = QLabel(self)
+                        self.labels[self.lavel + 2][0].move(450, 156)
+                        self.labels[self.lavel + 2][0].resize(93, 24)
+                else:
+                    self.labels[self.lavel + 1][0] = QLabel(self)
+                    self.labels[self.lavel + 1][0].move(162, 39)
+                    self.labels[self.lavel + 1][0].resize(93, 24)
 
-            self.labels[self.lavel][1] = QLabel(self)
-            name = self.plaing[1]
-            self.labels[self.lavel][1].setText(f'{"".join(name)}')
-            self.labels[self.lavel][1].move(12, 119)
-            self.labels[self.lavel][1].resize(93, 24)
+                    self.labels[self.lavel + 1][1] = QLabel(self)
+                    self.labels[self.lavel + 1][1].move(162, 119)
+                    self.labels[self.lavel + 1][1].resize(93, 24)
 
-            self.labels[self.lavel][2] = QLabel(self)
-            name = self.plaing[2]
-            self.labels[self.lavel][2].setText(f'{"".join(name)}')
-            self.labels[self.lavel][2].move(12, 203)
-            self.labels[self.lavel][2].resize(93, 24)
+                    self.labels[self.lavel + 1][2] = QLabel(self)
+                    self.labels[self.lavel + 1][2].move(162, 202)
+                    self.labels[self.lavel + 1][2].resize(93, 24)
 
-            self.labels[self.lavel][3] = QLabel(self)
-            name = self.plaing[3]
-            self.labels[self.lavel][3].setText(f'{"".join(name)}')
-            self.labels[self.lavel][3].move(12, 281)
-            self.labels[self.lavel][3].resize(93, 24)
+                    self.labels[self.lavel + 1][3] = QLabel(self)
+                    self.labels[self.lavel + 1][3].move(162, 282)
+                    self.labels[self.lavel + 1][3].resize(93, 24)
 
-            self.play[self.lavel] = [self.labels[self.lavel][0].text(),
-                                     self.labels[self.lavel][1].text(),
-                                     self.labels[self.lavel][2].text(),
-                                     self.labels[self.lavel][3].text()]
+                    self.labels[self.lavel + 2][0] = QLabel(self)
+                    self.labels[self.lavel + 2][0].move(294, 79)
+                    self.labels[self.lavel + 2][0].resize(93, 24)
 
-            self.labels[self.lavel + 1][0] = QLabel(self)
-            self.labels[self.lavel + 1][0].move(144, 79)
-            self.labels[self.lavel + 1][0].resize(93, 24)
+                    self.labels[self.lavel + 2][1] = QLabel(self)
+                    self.labels[self.lavel + 2][1].move(294, 241)
+                    self.labels[self.lavel + 2][1].resize(93, 24)
 
-            self.labels[self.lavel + 1][1] = QLabel(self)
-            self.labels[self.lavel + 1][1].move(144, 240)
-            self.labels[self.lavel + 1][1].resize(93, 24)
+                    self.labels[self.lavel + 3][0] = QLabel(self)
+                    self.labels[self.lavel + 3][0].move(450, 156)
+                    self.labels[self.lavel + 3][0].resize(93, 24)
 
-            self.labels[self.lavel + 2][0] = QLabel(self)
-            self.labels[self.lavel + 2][0].move(300, 155)
-            self.labels[self.lavel + 2][0].resize(93, 24)
+            elif len(self.plaing[i]) == 4:
+                self.btn.move(160, 330)
+                self.btn1.move(260, 330)
+                MainWindow.resize(450, 350)
+                self.pixmap = QPixmap('таблица2.jpg')
+                self.lbl.resize(450, 330)
 
-        elif len(self.plaing) == 2:
-            self.btn.move(110, 330)
-            self.btn1.move(210, 330)
-            MainWindow.resize(320, 350)
-            self.pixmap = QPixmap('таблица3.jpg')
-            self.lbl.resize(320, 330)
+                self.labels[self.lavel][0] = QLabel(self)
+                name = self.plaing[i][0]
+                self.labels[self.lavel][0].setText(f'{"".join(name)}')
+                self.labels[self.lavel][0].move(12, 39)
+                self.labels[self.lavel][0].resize(93, 24)
 
-            self.labels[self.lavel][0] = QLabel(self)
-            name = self.plaing[0]
-            self.labels[self.lavel][0].setText(f'{"".join(name)}')
-            self.labels[self.lavel][0].move(14, 75)
-            self.labels[self.lavel][0].resize(93, 24)
+                self.labels[self.lavel][1] = QLabel(self)
+                name = self.plaing[i][1]
+                self.labels[self.lavel][1].setText(f'{"".join(name)}')
+                self.labels[self.lavel][1].move(12, 119)
+                self.labels[self.lavel][1].resize(93, 24)
 
-            self.labels[self.lavel][1] = QLabel(self)
-            name = self.plaing[1]
-            self.labels[self.lavel][1].setText(f'{"".join(name)}')
-            self.labels[self.lavel][1].move(14, 238)
-            self.labels[self.lavel][1].resize(93, 24)
-            self.play[self.lavel] = [self.labels[self.lavel][0].text(),
-                                     self.labels[self.lavel][1].text()]
+                self.labels[self.lavel][2] = QLabel(self)
+                name = self.plaing[i][2]
+                self.labels[self.lavel][2].setText(f'{"".join(name)}')
+                self.labels[self.lavel][2].move(12, 203)
+                self.labels[self.lavel][2].resize(93, 24)
 
-            self.labels[self.lavel + 1][0] = QLabel(self)
-            self.labels[self.lavel + 1][0].move(170, 153)
-            self.labels[self.lavel + 1][0].resize(93, 24)
+                self.labels[self.lavel][3] = QLabel(self)
+                name = self.plaing[i][3]
+                self.labels[self.lavel][3].setText(f'{"".join(name)}')
+                self.labels[self.lavel][3].move(12, 281)
+                self.labels[self.lavel][3].resize(93, 24)
+
+                self.play[self.lavel] = [self.labels[self.lavel][0].text(),
+                                         self.labels[self.lavel][1].text(),
+                                         self.labels[self.lavel][2].text(),
+                                         self.labels[self.lavel][3].text()]
+
+                if self.flag_down:
+                    self.lavel += 1
+                    self.labels[self.lavel][0] = QLabel(self)
+                    self.labels[self.lavel][0].setText(self.labels_name[self.lavel][0])
+                    self.labels[self.lavel][0].move(144, 79)
+                    self.labels[self.lavel][0].resize(93, 24)
+
+                    self.labels[self.lavel][1] = QLabel(self)
+                    self.labels[self.lavel][1].setText(self.labels_name[self.lavel][1])
+                    self.labels[self.lavel][1].move(144, 240)
+                    self.labels[self.lavel][1].resize(93, 24)
+
+                    self.labels[self.lavel + 1][0] = QLabel(self)
+                    self.labels[self.lavel + 1][0].move(300, 155)
+                    self.labels[self.lavel + 1][0].resize(93, 24)
+
+                else:
+                    self.labels[self.lavel + 1][0] = QLabel(self)
+                    self.labels[self.lavel + 1][0].move(144, 79)
+                    self.labels[self.lavel + 1][0].resize(93, 24)
+
+                    self.labels[self.lavel + 1][1] = QLabel(self)
+                    self.labels[self.lavel + 1][1].move(144, 240)
+                    self.labels[self.lavel + 1][1].resize(93, 24)
+
+                    self.labels[self.lavel + 2][0] = QLabel(self)
+                    self.labels[self.lavel + 2][0].move(300, 155)
+                    self.labels[self.lavel + 2][0].resize(93, 24)
+
+            elif len(self.plaing[i]) == 2:
+                self.btn.move(110, 330)
+                self.btn1.move(210, 330)
+                MainWindow.resize(320, 350)
+                self.pixmap = QPixmap('таблица3.jpg')
+                self.lbl.resize(320, 330)
+
+                self.labels[self.lavel][0] = QLabel(self)
+                name = self.plaing[i][0]
+                self.labels[self.lavel][0].setText(f'{"".join(name)}')
+                self.labels[self.lavel][0].move(14, 75)
+                self.labels[self.lavel][0].resize(93, 24)
+
+                self.labels[self.lavel][1] = QLabel(self)
+                name = self.plaing[i][1]
+                self.labels[self.lavel][1].setText(f'{"".join(name)}')
+                self.labels[self.lavel][1].move(14, 238)
+                self.labels[self.lavel][1].resize(93, 24)
+                self.play[self.lavel] = [self.labels[self.lavel][0].text(),
+                                         self.labels[self.lavel][1].text()]
+
+                self.labels[self.lavel + 1][0] = QLabel(self)
+                self.labels[self.lavel + 1][0].move(170, 153)
+                self.labels[self.lavel + 1][0].resize(93, 24)
 
         self.lbl.setPixmap(self.pixmap)
         self.show()
@@ -225,6 +309,8 @@ class Ui_MainWindoww(QMainWindow):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def playing(self):
+        sp = []
+        i = 0
         if len(self.play[self.lavel]) == 1:
             QMessageBox.question(self, 'Finish',
                                  f'Турнир завершен',
@@ -232,15 +318,21 @@ class Ui_MainWindoww(QMainWindow):
         else:
             self.number += 1
             self.hide()
-            self.game = Ui_MainWindoow(self.play[self.lavel], self)
+            if self.flag_down:
+                while self.labels_name[self.lavel][i]:
+                    sp.append(self.labels_name[self.lavel][i])
+                    i += 1
+                self.game = Ui_MainWindoow(sp, self)
+            else:
+                self.game = Ui_MainWindoow(self.play[self.lavel], self)
 
     def SendResult(self, win_players):
+        self.flag_down = False
         self.show()
         self.lavel += 1
         self.play[self.lavel] = win_players
         for i in range(len(win_players)):
             self.labels[self.lavel][i].setText(win_players[i])
-        print(win_players)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -253,6 +345,7 @@ class Ui_MainWindoww(QMainWindow):
                                  QMessageBox.Yes)
         else:
             flag = True
+            flag_add = False
             count = 1
             i, okBtnPressed = QInputDialog.getText(self, "Введите название игры",
                                                    "Как назовём? Нельзя использовать цифры")
@@ -264,38 +357,45 @@ class Ui_MainWindoww(QMainWindow):
             if flag:
                 if okBtnPressed:
                     try:
-
                         cursorObj = self.con.cursor()
 
                         cursorObj.execute(
                             f"CREATE TABLE '{str(i)}'(id integer, name text, name2 text)")
                         # entities = (1, 'Andrew', 'Kirill')
-                        for j in range(0, len(self.play[self.number]), 2):
-                            entities = (count, self.play[self.number][j], self.play[self.number][j + 1])
-                            count += 1
-
-                            cursorObj.execute(
-                                f'INSERT INTO {str(i)}(id, name, name2) VALUES(?, ?, ?)', entities)
-
-                        self.con.commit()
-
-
-                    except Error:
-                        tip = QMessageBox.question(self, 'ERROR',
-                                                   f'файл с таким именем уже существует. Заменить?', )
-
-                        if tip == 16384:
-                            print(1)
-                            cursorObj = self.con.cursor()
-                            cursorObj.execute(f'DELETE from {str(i)}')
-                            for j in range(0, len(self.play[self.number]), 2):
-                                entities = (
-                                    count, self.play[self.number][j], self.play[self.number][j + 1])
+                        for a in range(self.lavel + 1):
+                            if flag_add:
+                                cursorObj.execute(
+                                    f'INSERT INTO {str(i)}(id, name, name2) VALUES(0, 0, 0)')
+                            for j in range(0, len(self.play[a]), 2):
+                                flag_add = True
+                                entities = (count, self.play[a][j], self.play[a][j + 1])
                                 count += 1
 
                                 cursorObj.execute(
-                                    f'INSERT INTO {str(i)}(id, name, name2) VALUES(?, ?, ?)', entities)
+                                    f'INSERT INTO {str(i)}(id, name, name2) VALUES(?, ?, ?)',
+                                    entities)
 
+                        self.con.commit()
+
+                    except Error:
+                        tip = QMessageBox.question(self, 'ERROR',
+                                                   f'файл с таким именем уже существует. Заменить?')
+
+                        if tip == 16384:
+                            cursorObj = self.con.cursor()
+                            cursorObj.execute(f'DELETE from {str(i)}')
+                            for a in range(self.lavel + 1):
+                                if flag_add:
+                                    cursorObj.execute(
+                                        f'INSERT INTO {str(i)}(id, name, name2) VALUES(0, 0, 0)')
+                                for j in range(0, len(self.play[a]), 2):
+                                    flag_add = True
+                                    entities = (count, self.play[a][j], self.play[a][j + 1])
+                                    count += 1
+
+                                    cursorObj.execute(
+                                        f'INSERT INTO {str(i)}(id, name, name2) VALUES(?, ?, ?)',
+                                        entities)
                             self.con.commit()
                         else:
                             self.save()

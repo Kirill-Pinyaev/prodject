@@ -12,6 +12,7 @@ class Ui_MainWindoow(QMainWindow):
         self.players = players
         self.masiv = [[None for i in range(7)] for i in range(7)]
         self.lbl = ''
+        self.lbl_xod = ''
         self.setupUi(self)
         self.show()
 
@@ -52,10 +53,11 @@ class Ui_MainWindoow(QMainWindow):
             self.lbl.setText(f'{self.players[self.k]} - X, {self.players[self.k + 1]} - 0')
             self.lbl.move(100, 280)
             self.lbl.resize(300, 20)
-            self.lbl_xod = QLabel(self)
+            if self.lbl_xod == '':
+                self.lbl_xod = QLabel(self)
+            self.lbl_xod.setText(f'Ход X')
             self.lbl_xod.move(50, 280)
             self.lbl_xod.resize(300, 20)
-            self.lbl_xod.setText(f'Ход X')
             MainWindow.setStatusBar(self.statusbar)
 
             self.retranslateUi(MainWindow)
@@ -147,6 +149,7 @@ class Ui_MainWindoow(QMainWindow):
                     self.masiv[i][j].setDisabled(False)
             self.win_players.append(self.players[self.k])
             self.k += 2
+            self.lbl_xod.setText(f'Ход X')
             self.setupUi(self)
         elif 'OOOOO' in text:
             reply = QMessageBox.question(self, 'Win',
@@ -159,6 +162,7 @@ class Ui_MainWindoow(QMainWindow):
                     self.masiv[i][j].setDisabled(False)
             self.win_players.append(self.players[self.k + 1])
             self.k += 2
+            self.lbl_xod.setText(f'Ход X')
             self.setupUi(self)
         elif ' ' not in text:
             reply = QMessageBox.question(self, 'Draw',
@@ -169,3 +173,4 @@ class Ui_MainWindoow(QMainWindow):
                     self.masiv[i][j].setText(' ')
                     self.flag = True
                     self.masiv[i][j].setDisabled(False)
+                    self.lbl_xod.setText(f'Ход X')

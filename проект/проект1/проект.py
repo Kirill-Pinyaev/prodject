@@ -61,7 +61,9 @@ class Example(QMainWindow, Ui_MainWindow):
 
     def loading(self):
         flag = True
-        sp = []
+        flag_add = True
+        sp = [[]]
+        count = 0
         tbname, okBtnPressed = QInputDialog.getText(self, "Введите название игры",
                                                     "Введите названеи игры")
         for k in str(tbname):
@@ -73,9 +75,14 @@ class Example(QMainWindow, Ui_MainWindow):
                     cur = self.con.cursor()
                     cur.execute(f"Select name, name2 from {tbname}")
                     for row in cur:
-                        print(row)
-                        sp.append(row[0])
-                        sp.append(row[1])
+                        if row[0] == '0' and row[1] == '0':
+                            sp.append([])
+                            count += 1
+                            flag_add = False
+                        if flag_add:
+                            sp[count].append(row[0])
+                            sp[count].append(row[1])
+                        flag_add = True
                     self.table = Ui_MainWindoww(0, sp)
                     self.hide()
                 except Error:
